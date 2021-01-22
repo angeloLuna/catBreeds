@@ -1,26 +1,29 @@
-import React from 'react'
-import { Text, View, Image, StyleSheet } from 'react-native'
+import React from 'react';
+import {Text, View, Image, StyleSheet} from 'react-native';
 
 const Header = () => {
-
   return (
     <View style={styles.container}>
-      <Image source={{ uri: 'https://i.pinimg.com/originals/5c/b9/18/5cb918952f184853961ea83597082f38.png' }} style={{ height: 100, width: 100 }} />
+      <Image source={require('../assets/img/cat.png')} style={styles.image} />
       <Text style={styles.text}>Breeds</Text>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 20,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20
   },
   text: {
     fontSize: 40,
-  }
-})
+  },
+  image: {
+    height: 80,
+    width: 80,
+  },
+});
 
-export default Header
+export default Header;
