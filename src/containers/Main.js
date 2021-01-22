@@ -8,6 +8,7 @@ import countries from '../constants/countries';
 import CatDetails from '../components/CatDetails';
 import ErrorLabel from '../components/ErrorLabel';
 import errors from '../constants/errors';
+import {getCoordinates} from '../helpers/main';
 
 const Main = () => {
   const [catsList, setCatsList] = useState([]);
@@ -28,9 +29,9 @@ const Main = () => {
       .catch((err) => setError(err));
   }, []);
 
-  const handleSelectChange = (itemValue, itemPosition) => {
+  const handleSelectChange = (itemValue) => {
     setError(false);
-    setOrError(getCoordinates(itemValue, catsList));
+    setOrError(getCoordinates(itemValue, catsList, countries));
     setSelectedItem(itemValue);
   };
 
@@ -59,29 +60,4 @@ const Main = () => {
   );
 };
 
-const getCoordinates = (code, catsList) => {
-  if (code && typeof code === 'string') {
-    const selectedCat = catsList.filter((item) => item.id === code);
-    if (selectedCat.length === 0) {
-      return {error: true, msj: errors.wrongCode};
-    }
-    const selectedCountry = countries.filter(
-      (country) => country.code === selectedCat[0].country_code,
-    );
-    if (selectedCountry.length === 0) {
-      return {error: true, msj: errors.notFound};
-    }
-    return {
-      latitude: Number(selectedCountry[0].lat.toFixed(1)),
-      longitude: Number(selectedCountry[0].lng.toFixed(1)),
-      latitudeDelta: 0.05,
-      longitudeDelta: 0.05,
-      cat: selectedCat[0],
-    };
-  }
-  return {error: true, msj: errors.notString};
-};
-
 export default Main;
-
-export {getCoordinates};
